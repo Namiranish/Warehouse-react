@@ -1,4 +1,4 @@
-const warehousesData = [
+export const warehousesData = [
   {
     "name" : "Warehouse-165",
     "code" : "W-00001",
