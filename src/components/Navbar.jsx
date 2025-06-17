@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HomePage from '../Pages/HomePage';
+// import HomePage from '../Pages/HomePage';
 
 const Navbar = () => {
   const navigate = useNavigate();
