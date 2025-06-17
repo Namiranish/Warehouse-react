@@ -11,23 +11,20 @@ const WarehouseCard = ({ id, name, city, spaceAvailable, type }) => {
   };
 
   return (
-    <Link to={`/warehouse/${id}`}>
-      <div
-        className="bg-indigo-700 hover:bg-indigo-800 transform hover:scale-105 hover:shadow-2xl shadow-md rounded-lg p-5 mb-5 cursor-pointer transition-all flex flex-col justify-between"
-        onClick={handleCardClick}
-      >
+    <Link to={`/warehouse/${id}`} onClick={handleCardClick}>
+      <div className="bg-gray-900 border border-gray-700 hover:border-gray-500 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 p-5 flex flex-col justify-between h-full cursor-pointer">
         {/* Warehouse Name */}
-        <h2 className="text-2xl font-bold text-white text-center">{name}</h2>
+        <h2 className="text-xl font-semibold text-white text-center">{name}</h2>
 
         {/* City and Type */}
-        <div className="flex justify-between mt-4">
-          <p className="text-gray-300 text-sm">{city}</p>
-          <p className="text-gray-300 font-medium text-sm">{type}</p>
+        <div className="flex justify-between mt-4 text-sm text-gray-400">
+          <span className="capitalize">{city}</span>
+          <span className="capitalize font-medium">{type}</span>
         </div>
 
         {/* Space Available */}
-        <div className="mt-auto">
-          <p className="text-gray-300 text-sm">
+        <div className="mt-4">
+          <p className="text-sm text-gray-400">
             Available Space: <span className="font-semibold text-white">{spaceAvailable} sq. ft.</span>
           </p>
         </div>

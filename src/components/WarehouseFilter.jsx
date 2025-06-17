@@ -3,7 +3,7 @@ import warehousesData from '../warehouses.json';
 import { useDispatch } from 'react-redux';
 import { searchByName, filterWarehouses } from '../features/warehouses/warehousesSlice';
 
-const WarehouseFilter = ({ warehouses, onFilter }) => {
+const WarehouseFilter = () => {
   const [city, setCity] = useState('');
   const [cluster, setCluster] = useState('');
   const [spaceLimit, setSpaceLimit] = useState('');
@@ -19,74 +19,79 @@ const WarehouseFilter = ({ warehouses, onFilter }) => {
     dispatch(searchByName(warehouseName));
   };
 
+  const resetFilters = () => {
+    setCity('');
+    setCluster('');
+    setSpaceLimit('');
+    dispatch(filterWarehouses({ city: '', cluster: '', spaceLimit: '' }));
+  };
+
+  const uniqueCities = [...new Set(warehousesData.map((w) => w.city))];
+  const uniqueClusters = [...new Set(warehousesData.map((w) => w.cluster))];
+  const uniqueSpaces = [...new Set(warehousesData.map((w) => w.space_available))].sort((a, b) => a - b);
+
   return (
-    <div className="bg-indigo-800 p-8 rounded-2xl shadow-2xl">
-      <div className="flex flex-wrap justify-between gap-6">
-        {/* Search by Name */}
-        <div className="w-full sm:w-1/2">
-          <input
-            type="text"
-            placeholder="Search by Warehouse Name"
-            onChange={(e) => handleSearch(e)}
-            className="p-4 border border-gray-500 rounded-lg w-full bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+    <div className="bg-gray-900 flex justify-center p-6 rounded-xl shadow-lg overflow-x-auto text-white relative z-10 mt-5">
+      <div className="flex flex-wrap lg:flex-nowrap items-center gap-4">
+        {/* Search Input */}
+        <input
+          type="text"
+          placeholder="Search warehouse"
+          onChange={handleSearch}
+          className="w-full lg:w-122 p-2.5 border border-gray-600 rounded-md bg-gray-800 placeholder-gray-400 text-white focus:ring-2 focus:ring-gray-500 outline-none"
+        />
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-5 w-full sm:w-auto">
-          {/* City Filter */}
-          <select
-            value={city}
-            onChange={(e) => {
-              if (e.target.value === 'City') setCity('');
-              else setCity(e.target.value);
-            }}
-            className="p-4 border border-gray-500 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option selected>City</option>
-            {warehousesData.map((warehouse) => (
-              <option key={warehouse.id}>{warehouse.city}</option>
-            ))}
-          </select>
+        {/* City Filter */}
+        <select
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="w-full lg:w-44 p-2.5 border border-gray-600 rounded-md bg-gray-800 text-white focus:ring-2 focus:ring-gray-500 outline-none"
+        >
+          <option value="">All Cities</option>
+          {uniqueCities.map((city, idx) => (
+            <option key={idx} value={city}>{city}</option>
+          ))}
+        </select>
 
-          {/* Cluster Filter */}
-          <select
-            value={cluster}
-            onChange={(e) => {
-              if (e.target.value === 'Cluster') setCluster('');
-              else setCluster(e.target.value);
-            }}
-            className="p-4 border border-gray-500 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option selected>Cluster</option>
-            {warehousesData.map((warehouse) => (
-              <option key={warehouse.id}>{warehouse.cluster}</option>
-            ))}
-          </select>
+        {/* Cluster Filter */}
+        <select
+          value={cluster}
+          onChange={(e) => setCluster(e.target.value)}
+          className="w-full lg:w-44 p-2.5 border border-gray-600 rounded-md bg-gray-800 text-white focus:ring-2 focus:ring-gray-500 outline-none"
+        >
+          <option value="">All Clusters</option>
+          {uniqueClusters.map((cl, idx) => (
+            <option key={idx} value={cl}>{cl}</option>
+          ))}
+        </select>
 
-          {/* Space Available Filter */}
-          <select
-            value={spaceLimit}
-            onChange={(e) => {
-              if (e.target.value === 'Space Available') setSpaceLimit('');
-              else setSpaceLimit(e.target.value);
-            }}
-            className="p-4 border border-gray-500 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option selected>Space Available</option>
-            {warehousesData.map((warehouse) => (
-              <option key={warehouse.id}>{warehouse.space_available}</option>
-            ))}
-          </select>
+        {/* Space Filter */}
+        <select
+          value={spaceLimit}
+          onChange={(e) => setSpaceLimit(e.target.value)}
+          className="w-full lg:w-48 p-2.5 border border-gray-600 rounded-md bg-gray-800 text-white focus:ring-2 focus:ring-gray-500 outline-none"
+        >
+          <option value="">All Space</option>
+          {uniqueSpaces.map((space, idx) => (
+            <option key={idx} value={space}>{space} sq. ft.</option>
+          ))}
+        </select>
 
-          {/* Apply Filter Button */}
-          <button
-            onClick={handleFilter}
-            className= " cursor-pointer bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Apply Filters
-          </button>
-        </div>
+        {/* Apply Button */}
+        <button
+          onClick={handleFilter}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
+        >
+          Apply
+        </button>
+
+        {/* Reset Button */}
+        <button
+          onClick={resetFilters}
+          className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition"
+        >
+          Reset
+        </button>
       </div>
     </div>
   );

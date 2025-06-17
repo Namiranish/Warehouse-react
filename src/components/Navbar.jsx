@@ -1,46 +1,56 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import HomePage from '../Pages/HomePage';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  function onHeadingClick(){
+  const onHeadingClick = () => {
     navigate('/');
-  }
+  };
+
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="bg-black p-3 shadow-lg">
-      <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center">
-          <h1 onClick={onHeadingClick} className="cursor-pointer text-xl font-semibold text-white bg-indigo-600 px-8 py-2 rounded-xl shadow-lg">
-            Warehouse
-          </h1>
+    <nav className="bg-gray-900 text-white fixed top-0 left-0 right-0 z-50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <div onClick={onHeadingClick} className="cursor-pointer">
+          <h1 className="text-white-400 text-2xl font-extrabold tracking-wide">📦 Warehouse</h1>
         </div>
-        <div className="cursor-pointer hidden lg:flex space-x-10">
-          <p onClick={onHeadingClick}  className="text-white hover:text-indigo-400 transition duration-200">Home</p>
-          <p className="text-white hover:text-indigo-400 transition duration-200">About</p>
-          <p className="text-white hover:text-indigo-400 transition duration-200">Services</p>
-          <p className="text-white hover:text-indigo-400 transition duration-200">Contact</p>
+
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex space-x-10 font-medium">
+          <p onClick={onHeadingClick} className="hover:text-gray-400 cursor-pointer transition duration-300">Home</p>
+          <p className="hover:text-gray-400 cursor-pointer transition duration-300">About</p>
+          <p className="hover:text-gray-400 cursor-pointer transition duration-300">Services</p>
+          <p className="hover:text-gray-400 cursor-pointer transition duration-300">Contact</p>
         </div>
+
+        {/* Mobile Hamburger */}
         <div className="lg:hidden">
-          <button onClick={handleToggleMenu} className="text-white focus:outline-none">
-            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+          <button onClick={handleToggleMenu} className="text-indigo-400 focus:outline-none">
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+              />
             </svg>
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden mt-3 bg-gray-800 shadow-md rounded-lg">
-          <a href="#home" className="block text-white py-4 px-6 hover:bg-indigo-700 transition-all duration-200">Home</a>
-          <a href="#about" className="block text-white py-4 px-6 hover:bg-indigo-700 transition-all duration-200">About</a>
-          <a href="#services" className="block text-white py-4 px-6 hover:bg-indigo-700 transition-all duration-200">Services</a>
-          <a href="#contact" className="block text-white py-4 px-6 hover:bg-indigo-700 transition-all duration-200">Contact</a>
+        <div className="lg:hidden bg-gray-800 px-6 py-4 space-y-3 shadow-md text-white">
+          <p onClick={onHeadingClick} className="block font-medium hover:text-gray-400 cursor-pointer">Home</p>
+          <p className="block font-medium hover:text-gray-400 cursor-pointer">About</p>
+          <p className="block font-medium hover:text-gray-400 cursor-pointer">Services</p>
+          <p className="block font-medium hover:text-gray-400 cursor-pointer">Contact</p>
         </div>
       )}
     </nav>
