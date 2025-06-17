@@ -4,7 +4,7 @@ A responsive, modern Warehouse Management Dashboard built with **React**, **Redu
 
 ## 🔗 Hosted Link
 
-[Live Preview](https://your-deployed-link.vercel.app/) <!-- Replace with actual hosted link -->
+[Live Preview](https://warehouse-react-namira.vercel.app/) 
 
 ---
 
